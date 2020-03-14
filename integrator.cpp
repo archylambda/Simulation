@@ -13,7 +13,68 @@
 
 using namespace StdLinearAlgebra;
 using namespace std;
-int hhhhh = 0;
+//===========================================================================
+//class TEilerIntegrator
+long double TEilerIntegrator::Run(TModel *Model){
+
+    long double //начальное время
+                t = Model->getT0(),
+                //конечный шаг
+                t1 = Model->getT1(),
+                // шаг интегрирования
+                h = Model->getSamplingIncrement();
+    //заполняем вектор состояния системы начальными условиями модели
+    TVector X = Model->getInitialConditions();
+    //главный цикл
+    while (t < t1){
+        //получаем правые части
+        TVector rp(Model->getOrder());
+        Model->getRight(X, t, rp);
+
+        X = X + h*rp;
+
+        Model->addResult(X, t);
+
+        Model->ActionAfterStep(X, t);
+
+        t += h;
+    }
+
+}
+
+long double TRungeKuttaIntegrator::Run(TModel *Model){
+
+    long double //начальное время
+                t = Model->getT0(),
+                //конечный шаг
+                t1 = Model->getT1(),
+                // шаг интегрирования
+                h = Model->getSamplingIncrement();
+    //заполняем вектор состояния системы начальными условиями модели
+    TVector X = Model->getInitialConditions();
+    //инициализируем векторы коэффициентов
+    for(int i = 0; i < 4; i++){
+        K[i].resize(X.size());
+    }
+
+    //главный цикл
+    while (t < t1){
+        // Вычисляем коэф-ты К
+        Model->getRight(X, t, K[0]);
+        Model->getRight(X + h/2 * K[0], t + h/2, K[1]);
+        Model->getRight(X + h/2 * K[1], t + h/2, K[2]);
+        Model->getRight(X + h * K[2], t + h, K[3]);
+
+        X = X + (h/6 * (K[0] + 2*K[1] + 2*K[2] + K[3]));
+
+        Model->addResult(X, t);
+
+        Model->ActionAfterStep(X, t);
+
+        t += h;
+    }
+
+}
 //===========================================================================
 // class TDormandPrinceIntegrator
 

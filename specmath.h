@@ -22,6 +22,9 @@ public:
     static TMatrix getMatFromInertToTopocentric(const long double &s, const long double &phi);
      //возвращает угол гринвического меридиана на передаваемую юлианскую дату
     static long double getSiderealTime(const long double &JD);
+
+    static TVector KeplerToCartesian(const TVector &keplerVec);
+    static TVector CartesianToKepler(const TVector &cartesVec);
 };
 
 #endif // SPECMATH_H

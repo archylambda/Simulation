@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <integrator.h>
 #include <sinus.h>
+#include <earthsatellite.h>
 #include <iostream>
 #include <sstream>
 
@@ -21,10 +22,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    TIntegrator* Integrator = new TDormandPrinceIntegrator();
-    Integrator->setPrecision(1e-10);
+    TIntegrator* Integrator = new TRungeKuttaIntegrator();
+    Integrator->setPrecision(1e-6);
 
-    TModel* testModel = new Sinus();
+    TModel* testModel = new TEarthSatellite();
 
     Integrator->Run(testModel);
 

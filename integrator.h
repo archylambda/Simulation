@@ -27,6 +27,25 @@ class TIntegrator
         virtual ~TIntegrator(){}
 };
 
+class TEilerIntegrator : public TIntegrator
+{
+   public:
+        TEilerIntegrator(){}
+        virtual long double Run(TModel *Model);
+        ~TEilerIntegrator(){}
+};
+
+class TRungeKuttaIntegrator : public TIntegrator
+{
+    private:
+        TVector K[4];
+    public:
+        TRungeKuttaIntegrator(){}
+        virtual long double Run(TModel *Model);\
+        ~TRungeKuttaIntegrator(){}
+
+};
+
 class TDormandPrinceIntegrator : public TIntegrator
 {
     private:

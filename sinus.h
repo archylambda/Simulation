@@ -5,18 +5,18 @@
 
 using namespace std;
 
-class Sinus : public TModel
+class TSinus : public TModel
 {
 private:
     fstream outfile_;
 public:
-    Sinus();
+    TSinus();
 
     virtual void getRight(const TVector &X, long double t, TVector &Y) override;
 
     virtual void addResult(const TVector &X, long double t) override;
 
-//    ~Sinus();
+    ~TSinus();
 };
 
 #endif // SINUS_H

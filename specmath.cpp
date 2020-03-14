@@ -8,7 +8,7 @@ SpecMath::SpecMath()
 
 long double SpecMath::gradToRad(const int &grad, const int &min){
     //0 < min < 60, 0 < grad
-    return (grad + min/60.0)*M_PIl/180.0;
+    return (grad + min/60.0)*M_PI/180.0;
 }
 
 TMatrix SpecMath::getMatfromOrbToInert(const long double &incl,  const long double &longAsc,
@@ -69,5 +69,45 @@ long double SpecMath::getSiderealTime(const long double &JD){
 
     long double s = 24110.54841 + 8640184.812866*t + 0.093104*(t*t) - 0.0000062*(t*t*t);
 
-    return 2*M_PIl/86400*fmodl(s, 86400); // возвращаю в радианах
+    return 2*M_PI/86400*fmodl(s, 86400); // возвращаю в радианах
+}
+
+TVector SpecMath::CartesianToKepler(const TVector &cartesVec){
+    TVector R(3);
+    R[0] = cartesVec[0]; R[1] = cartesVec[1]; R[0] = cartesVec[2];
+
+    TVector V(3);
+    V[3] = cartesVec[3]; V[4] = cartesVec[4]; V[5] = cartesVec[5];
+
+    TVector c = R^V,
+            f = (f^c) - MU_EARTH*R*(1./R.length());
+    long double p = powl(c.length(),2)/MU_EARTH,
+                e = f.length()/MU_EARTH,
+                a = p/(1 - e*e);
+    TVector e_c = c*(1./c.length()),
+            e_f = f*(1./f.length()),
+            e_r = R*(1./R.length()),
+            e_x(3),
+            e_z(3),
+            e_Omega(3);
+    e_x[0] = 1; e_x[1] = 0; e_x[2] = 0;
+    e_z[0] = 0; e_z[1] = 0; e_z[2] = 1;
+
+    e_Omega = (e_z^e_c)*(1./(e_z^e_c).length());
+    //??
+    long double i = acosl(e_z*e_c),
+                Omega = atan2l((e_x^e_Omega) * e_z, e_x * e_Omega),
+                w = atan2l((e_Omega^e_f) * e_c, e_Omega * e_f),
+                nu = atan2l((e_f^e_r) * e_c, e_f * e_r);
+
+    TVector keplerVec(6);
+    keplerVec.push_back(a);
+    keplerVec.push_back(e);
+    keplerVec.push_back(i);
+    keplerVec.push_back(w);
+    keplerVec.push_back(Omega);
+    keplerVec.push_back(nu);
+
+    return keplerVec;
+
 }

@@ -2,14 +2,12 @@
 #include <string>
 #include <iostream>
 #include <math.h>
-//поменять
-int STATE_SHAPE = 1;
-string filename = "result.txt";
 
-Sinus::Sinus()
+TSinus::TSinus()
 {
-    X0.resize(STATE_SHAPE);
-    X0[0] = 1;
+    string filename = "result.txt";
+    X0.resize(1);
+    X0[0] = 0;
 
     //запись в файл
     outfile_.exceptions ( std::ifstream::failbit | std::ifstream::badbit );
@@ -20,11 +18,15 @@ Sinus::Sinus()
     }
 }
 
-void Sinus::getRight(const TVector &X, long double t, TVector &Y){
+void TSinus::getRight(const TVector &X, long double t, TVector &Y){
     Y[0] = sinl(t);
 }
 
-void Sinus::addResult(const TVector &X, long double t){
+void TSinus::addResult(const TVector &X, long double t){
 
     outfile_ << t << ' ' << X[0] << endl;
+}
+
+TSinus::~TSinus(){
+    outfile_.close();
 }
