@@ -1,16 +1,17 @@
 #include "earthsatellite.h"
 #include "const.h"
 #include <iostream>
-
+#include <specmath.h>
 
 TEarthSatellite::TEarthSatellite()
 {
     string filename = "result.txt";
+    TVector kepStartCond(6);
+    kepStartCond[0] = 42164; kepStartCond[1] = 0; kepStartCond[2] = 0;
+    kepStartCond[3] = 0; kepStartCond[4] = 0; kepStartCond[5] = 0;
     X0.resize(6);
-
-//    X[0] = -200000;
-//    X[1] =
-
+    X0 = SpecMath::KeplerToCartesian(kepStartCond);
+    t1 = 20000;
     //запись в файл
     outfile_.exceptions ( std::ifstream::failbit | std::ifstream::badbit );
     try{
