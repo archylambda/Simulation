@@ -103,11 +103,36 @@ TVector SpecMath::CartesianToKepler(const TVector &cartesVec){
     TVector keplerVec(6);
     keplerVec.push_back(a);
     keplerVec.push_back(e);
+    keplerVec.push_back(Omega);
     keplerVec.push_back(i);
     keplerVec.push_back(w);
-    keplerVec.push_back(Omega);
     keplerVec.push_back(nu);
 
     return keplerVec;
 
+}
+
+TVector SpecMath::KeplerToCartesian(const TVector &keplerVec){
+    long double a = keplerVec[0],
+                e = keplerVec[1],
+                Omega = keplerVec[2],
+                i = keplerVec[3],
+                w = keplerVec[4],
+                nu = keplerVec[5];
+    TMatrix A = getMatfromOrbToInert(i, Omega, w, nu);
+
+    long double P = a * (1 - e*e);
+    TVector r(3);
+    r[0] = P/(1 + e*cosl(nu)); r[1] = 0; r[2] = 0;
+    TVector v(3);
+    v[0] = sqrtl(MU_EARTH/P)*e*sinl(nu); v[1] = sqrtl(MU_EARTH/P) * (1 + e*cosl(nu)); v[2] = 0;
+
+    TVector R = A*r,
+            V = A*v;
+
+    TVector cartesVec(6);
+    cartesVec[0] = R[0]; cartesVec[1] = R[1]; cartesVec[2] = R[2];
+    cartesVec[3] = V[0]; cartesVec[4] = V[1]; cartesVec[5] = V[2];
+
+    return cartesVec;
 }
