@@ -2,14 +2,12 @@
 //#define EARTH_H
 //#include "model.h"
 //#include "dateandtime.h"
-//#include "gnomon.h"
 //#include <fstream>
 //#include <string>
-//#include <dateandtime.h>
 //#include <map>
 //using namespace std;
 
-//class Earth : public TModel
+//class TEarth : public TModel
 //{
 //private:
 //    //вектор состояния Земли
@@ -26,8 +24,7 @@
 //    long double InitSG_;
 //    //звёздное время текущее
 //    long double SG_;
-//    //модель солнечных часов
-//    Gnomon* gnomon_;
+
 //    //вывод в файл
 //    fstream outfile_;
 
@@ -38,11 +35,9 @@
 //    //моделирование вращения земли
 //    void earthRotate(long double t);
 
-//    TVector dayStart_;
-//    TVector nightStart_;
 //public:
 
-//    Earth(const Location &loc, const string &outFileName);
+//    TEarth();
 
 //    virtual void getRight( const TVector& X, long  double t, TVector& Y );
 
@@ -54,12 +49,8 @@
 //    void simModeOn(const Date& reqDate, long double simDuration, const TVector &initX);
 //    void timeAnalysisModeOn();
 
-//    inline TVector getLastX(){ return curX_;}
-//    inline TVector getDayStart(){ return dayStart_;}
-//    inline TVector getNightStart(){ return nightStart_;}
 
-
-//    ~Earth();
+//    ~TEarth();
 //};
 
 //#endif // EARTH_H

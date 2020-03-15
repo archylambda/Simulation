@@ -22,8 +22,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    TIntegrator* Integrator = new TRungeKuttaIntegrator();
-    Integrator->setPrecision(1e-6);
+    TIntegrator* Integrator = new TDormandPrinceIntegrator();
+    Integrator->setPrecision(100);
 
     TModel* testModel = new TEarthSatellite();
 
@@ -49,11 +49,13 @@ void MainWindow::on_pushButton_clicked()
 
     // create graph and assign data to it:
     ui->customPlot->addGraph();
+    ui->customPlot->graph(0)->setLineStyle(QCPGraph::lsNone);
+    ui->customPlot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, 5));
     ui->customPlot->graph(0)->setData(t, x);
+    ui->customPlot->graph(0)->rescaleAxes(true);
     // give the axes some labels:
     ui->customPlot->xAxis->setLabel("t");
     ui->customPlot->yAxis->setLabel("x");
-    ui->customPlot->xAxis->setRange(0, 50);
     ui->customPlot->replot();
 
     delete testModel;

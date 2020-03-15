@@ -25,7 +25,8 @@ SOURCES += \
     integrator.cpp \
     model.cpp \
     earth.cpp \
-    specmath.cpp
+    specmath.cpp \
+    dateandtime.h
 
 HEADERS += \
     earthsatellite.h \
@@ -37,6 +38,7 @@ HEADERS += \
     model.h \
     earth.h \
     specmath.h \
+    dateandtime.cpp \
     const.h
 
 FORMS += \

@@ -205,7 +205,7 @@ long double TDormandPrinceIntegrator::Run(TModel* Model)
         // Формирование рез-тов при помощи механизмов плотной выдачи
         while ( (t_out < t + h) && (t_out <= t1) )
         {
-            double theta = (t_out - t)/h,
+            long double theta = (t_out - t)/h,
                         b[6];
             // Расчитываем коэф-ты плотной выдачи
             b[0] = theta*(1 + theta*(-1337./480 + theta*(1039./360 + theta*(-1163./1152))));

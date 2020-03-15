@@ -5,15 +5,13 @@
 //#include "dateandtime.h"
 //#include <iostream>
 
-//Earth::Earth(const Location &loc, const string& outFileName)
+//TEarth::TEarth()
 //{
 
 
 //    //получаем угол место гринвического меридиана
 //    InitSG_ = SpecMath::getSiderealTime(startDate.getUlianDate());
 
-//    //создаём гноммон
-//    gnomon_ = new Gnomon(loc, InitSG_, 1, 15);
 
 
 //    //на дату 01.01.2019 0:00
@@ -34,7 +32,7 @@
 //    }
 //}
 
-//void Earth::jumpModeOn(const Date &reqDate){
+//void TEarth::jumpModeOn(const Date &reqDate){
 //    //режим "прыжка"
 //    workMode_ = 1;
 //    //выставляем время выдачи результата равным времени интегрирования
@@ -44,7 +42,7 @@
 
 //}
 
-//void Earth::simModeOn(const Date& reqDate, long double simDuration, const TVector &initX){
+//void TEarth::simModeOn(const Date& reqDate, long double simDuration, const TVector &initX){
 //    //режим моделирования
 //    workMode_ = 2;
 
@@ -60,7 +58,7 @@
 //    clearResult();
 //}
 
-//void Earth::timeAnalysisModeOn(){
+//void TEarth::timeAnalysisModeOn(){
 //    workMode_ = 3;
 //    //время интегрирования - 1 год
 //    t1 = 365*24*3600;
@@ -68,7 +66,7 @@
 //    SamplingIncrement = 60;
 
 //}
-//void Earth::getRight(const TVector &X, long double t, TVector &Y){
+//void TEarth::getRight(const TVector &X, long double t, TVector &Y){
 //    long double len = X.length();
 
 //    Y[0] = X[3];
@@ -81,7 +79,7 @@
 
 //}
 
-//void Earth::addResult(const TVector &X, long double t){
+//void TEarth::addResult(const TVector &X, long double t){
 
 
 //    switch (workMode_) {
@@ -89,35 +87,11 @@
 //    case 1:
 //        curX_ = X;
 //        break;
-//    case 2:
-//        if (gnomon_->isDay()){
-//            TVector sh = gnomon_->getShadow();
-//            TMatrix A = SpecMath::getMatFromInertToTopocentric(gnomon_->getS(), gnomon_->getLoc().phi);
-
-//            sh = A*sh;
-//            if(sh.length() < gnomon_->maxShadowLen()){
-//                for(const auto& k: sh){
-//                    outfile_ << std::fixed << k << ' ';
-//                }
-//                outfile_ << endl;
-//            }
-//        }
-//        break;
-//    case 3:
-//        long double time = fmod(t, 24*3600);
-//        if(gnomon_->isNightDayChanged()){
-//            if (gnomon_->isDay()){
-//                dayStart_.push_back(time);
-//            } else {
-//                nightStart_.push_back(time);
-//            }
-//        }
-//        break;
 //    }
 
 //}
 
-//void Earth::ActionAfterStep(const TVector &X, long double t){
+//void TEarth::ActionAfterStep(const TVector &X, long double t){
 
 //    //расчёт текущего звёздного времени места
 //    earthRotate(t);
@@ -126,7 +100,7 @@
 
 //}
 
-//void Earth::earthRotate(long double t){
+//void TEarth::earthRotate(long double t){
 
 //    SG_ = InitSG_ + Omega*t;
 //    gnomon_->setS(SG_);
@@ -134,7 +108,7 @@
 //}
 
 
-//Earth::~Earth(){
+//TEarth::~TEarth(){
 
 //    delete gnomon_;
 //    gnomon_ = nullptr;
