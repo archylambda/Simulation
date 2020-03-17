@@ -5,7 +5,6 @@
 
 TEarthSatellite::TEarthSatellite()
 {
-    string filename = "result.txt";
     TVector kepStartCond(6);
     kepStartCond[0] = 42164; kepStartCond[1] = 0; kepStartCond[2] = 0;
     kepStartCond[3] = 0; kepStartCond[4] = 0; kepStartCond[5] = 0;

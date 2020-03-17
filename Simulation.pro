@@ -19,18 +19,19 @@ SOURCES += \
     earthsatellite.cpp \
     main.cpp \
     mainwindow.cpp \
+    moon.cpp \
     qcustomplot.cpp \
     sinus.cpp \
     tvector.cpp \
     integrator.cpp \
     model.cpp \
     earth.cpp \
-    specmath.cpp \
-    dateandtime.h
+    specmath.cpp
 
 HEADERS += \
     earthsatellite.h \
     mainwindow.h \
+    moon.h \
     qcustomplot.h \
     sinus.h \
     tvector.h \
@@ -38,7 +39,6 @@ HEADERS += \
     model.h \
     earth.h \
     specmath.h \
-    dateandtime.cpp \
     const.h
 
 FORMS += \

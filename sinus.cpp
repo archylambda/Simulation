@@ -2,10 +2,10 @@
 #include <string>
 #include <iostream>
 #include <math.h>
-
+#include <const.h>
 TSinus::TSinus()
 {
-    string filename = "result.txt";
+
     X0.resize(1);
     X0[0] = 0;
 

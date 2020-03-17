@@ -2,10 +2,11 @@
 #include "ui_mainwindow.h"
 #include <integrator.h>
 #include <sinus.h>
+#include <earth.h>
 #include <earthsatellite.h>
 #include <iostream>
 #include <sstream>
-
+#include <moon.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -22,10 +23,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    TIntegrator* Integrator = new TDormandPrinceIntegrator();
-    Integrator->setPrecision(100);
+    TIntegrator* Integrator = new TRungeKuttaIntegrator();
+    Integrator->setPrecision(1000);
 
-    TModel* testModel = new TEarthSatellite();
+    TModel* testModel = new TMoon();
 
     Integrator->Run(testModel);
 
@@ -54,8 +55,8 @@ void MainWindow::on_pushButton_clicked()
     ui->customPlot->graph(0)->setData(t, x);
     ui->customPlot->graph(0)->rescaleAxes(true);
     // give the axes some labels:
-    ui->customPlot->xAxis->setLabel("t");
-    ui->customPlot->yAxis->setLabel("x");
+    ui->customPlot->xAxis->setLabel("X");
+    ui->customPlot->yAxis->setLabel("Y");
     ui->customPlot->replot();
 
     delete testModel;
