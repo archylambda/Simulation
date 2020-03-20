@@ -101,12 +101,12 @@ TVector SpecMath::CartesianToKepler(const TVector &cartesVec){
                 nu = atan2l((e_f^e_r) * e_c, e_f * e_r);
 
     TVector keplerVec(6);
-    keplerVec.push_back(a);
-    keplerVec.push_back(e);
-    keplerVec.push_back(Omega);
-    keplerVec.push_back(i);
-    keplerVec.push_back(w);
-    keplerVec.push_back(nu);
+    keplerVec[0] = a;
+    keplerVec[1] = e;
+    keplerVec[2] = Omega;
+    keplerVec[3] = i;
+    keplerVec[4] = w;
+    keplerVec[5] = nu;
 
     return keplerVec;
 
@@ -136,3 +136,4 @@ TVector SpecMath::KeplerToCartesian(const TVector &keplerVec){
 
     return cartesVec;
 }
+

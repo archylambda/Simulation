@@ -19,9 +19,12 @@ SOURCES += \
     earthsatellite.cpp \
     main.cpp \
     mainwindow.cpp \
+    modeldecorator.cpp \
     moon.cpp \
+    moondecorator.cpp \
     qcustomplot.cpp \
     sinus.cpp \
+    sundecorator.cpp \
     tvector.cpp \
     integrator.cpp \
     model.cpp \
@@ -31,9 +34,12 @@ SOURCES += \
 HEADERS += \
     earthsatellite.h \
     mainwindow.h \
+    modeldecorator.h \
     moon.h \
+    moondecorator.h \
     qcustomplot.h \
     sinus.h \
+    sundecorator.h \
     tvector.h \
     integrator.h \
     model.h \

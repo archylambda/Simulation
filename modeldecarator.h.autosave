@@ -1,0 +1,19 @@
+#ifndef MODELDECARATOR_H
+#define MODELDECARATOR_H
+#include <model.h>
+
+class TModelDecarator : public TModel
+{
+private:
+    TModel* model_;
+public:
+    TModelDecarator(TModel* model) : model_(model){}
+    
+    void getRight(const TVector &X, long double t, TVector &Y) override{
+        this->model_->getRight(X, t, Y);
+    }
+    
+    ~TModelDecarator();
+};
+
+#endif // MODELDECARATOR_H

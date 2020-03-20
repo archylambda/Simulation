@@ -25,6 +25,7 @@ public:
 
     static TVector KeplerToCartesian(const TVector &keplerVec);
     static TVector CartesianToKepler(const TVector &cartesVec);
+
 };
 
 #endif // SPECMATH_H

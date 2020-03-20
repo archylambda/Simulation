@@ -7,6 +7,8 @@
 #include <iostream>
 #include <sstream>
 #include <moon.h>
+#include <moondecorator.h>
+#include <sundecorator.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -23,12 +25,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+
     TIntegrator* Integrator = new TRungeKuttaIntegrator();
-    Integrator->setPrecision(1000);
 
-    TModel* testModel = new TMoon();
+    TModel* sat = new TEarthSatellite();
 
-    Integrator->Run(testModel);
+    TModel* wrapped_by_Moon = new TMoonDecorator(sat);
+    TModel* wrapped_by_Sun = new TSunDecorator(wrapped_by_Moon);
+
+    Integrator->Run(wrapped_by_Sun);
 
     QVector<double> t, x;
     ifstream file("result.txt");
@@ -59,6 +64,8 @@ void MainWindow::on_pushButton_clicked()
     ui->customPlot->yAxis->setLabel("Y");
     ui->customPlot->replot();
 
-    delete testModel;
+    delete wrapped_by_Sun;
+    delete wrapped_by_Moon;
+    delete sat;
     delete Integrator;
 }
