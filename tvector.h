@@ -46,6 +46,8 @@ public:
     TVector rotate(double phi, const TVector& axis) const;
     // Поворот вектора при помощи заданного кватерниона
     TVector rotateByQuaternion(const TQuaternion& L) const;
+    // соединение векторов
+    TVector stack(const TVector& arg) const;
 };
 class TMatrix:protected BaseMatrix{
 private:
@@ -69,7 +71,7 @@ public:
     // оператор константного доступа к элементам матрицы
     inline const long double& operator()(size_t i,size_t j) const { return (*this)[i][j]; }
     //константный оператор доступа к строке матрицы как к вектору
-    //inline const TVector& operator() (size_t i) const { return (TVector&)(*this)[i]; }
+    inline const TVector& operator() (size_t i) const { return (TVector&)(*this)[i]; }
     //изменение размера
     void resize(size_t n, size_t m);
     //унарный минус

@@ -179,6 +179,21 @@ TVector TVector::rotateByQuaternion(const TQuaternion& L) const{
 
     return rotate.vect();
 }
+
+TVector TVector::stack(const TVector &arg) const{
+    size_t sz = size(),
+            arg_sz = arg.size();
+
+    TVector res(arg_sz + sz);
+    for(size_t i = 0; i < sz; i++){
+        res[i] = (*this)[i];
+    }
+    for(size_t i = sz; i < sz + arg_sz; i++){
+        res[i] = arg[i - sz];
+    }
+    
+    return res;
+}
 // ---------------TMatrix----------------
 void TMatrix::resize(size_t n, size_t m){
     BaseMatrix::resize(n);
