@@ -1,6 +1,0 @@
-#include "modeldecarator.h"
-
-
-TModelDecarator::~TModelDecarator(){
-    delete model_;
-}
