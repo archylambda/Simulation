@@ -29,6 +29,14 @@ class TModel
             , t1( 20 )
             , N( 0 )
         {}
+
+        inline void setSamplingIncrement(const long double &_SamplingIncrement){
+            SamplingIncrement = _SamplingIncrement;
+        }
+        inline void setEndTime(const long double &_t1){
+            t1 = _t1;
+        }
+
         // Абстрактная перегружаемая функция правых частей ДУ(Х - вектор состояния, t - независимый аргумент)
         virtual void getRight( const TVector& X, long  double t, TVector& Y ) = 0;
         // Получение начальных условий
