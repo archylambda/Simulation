@@ -212,7 +212,7 @@ long double TDormandPrinceIntegrator::Run(TModel* Model)
             b[1] = 0;
             b[2] = 100*theta*theta*(1054./9275 + theta*(-4682./27825 + theta*(379./5565)))/3;
             b[3] = -5*theta*theta*(27./40 + theta*(-9./5 + theta*(83./96)))/2;
-            b[4] = 18225*theta*theta*(-3./250 + theta*(22/375 + theta*(-37./600)))/848;
+            b[4] = 18225*theta*theta*(-3./250 + theta*(22./375 + theta*(-37./600)))/848;
             b[5] = -22*theta*theta*(-3./10 + theta*(29./30 + theta*(-17./24)))/7;
 
             // Получаем рез-тат для выдачи
