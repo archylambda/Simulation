@@ -2,6 +2,7 @@
 #include <const.h>
 #include <math.h>
 #include <earth.h>
+#include <iostream>
 
 TSunDecorator::TSunDecorator(TModel* model) :
     TModelDecorator(model)
@@ -42,34 +43,46 @@ TVector TSunDecorator::vecToGeliocent(const TVector &X){
 }
 
 std::vector<TVector> TSunDecorator::splitX(const TVector &X){
-    size_t stackedsize = getOrder(),
+    int stackedsize = getOrder(),
             mod_size = getOrder() - sun_m_->getOrder();
 
 
     TVector modX(mod_size),
-            sunX(mod_size);
-    for(size_t i = 0; i < mod_size; i++){
+            sunX(sun_m_->getOrder());
+    for(int i = 0; i < mod_size; i++){
         modX[i] = X[i];
     }
 
-    for(size_t i = mod_size; i < stackedsize; i++){
+    for(int i = mod_size; i < stackedsize; i++){
+        sunX[i] = X[i];
+    }
+
+    std::vector<TVector> res(2);
+    res[0] = modX; res[1] = sunX;
+    return res;
+}
+
+void TSunDecorator::getRight(const TVector &X, long double t, TVector &Y){
+    int stackedsize = getOrder(),
+            mod_size = getOrder() - sun_m_->getOrder();
+
+
+    TVector modX(mod_size),
+            sunX(sun_m_->getOrder());
+    for(int i = 0; i < mod_size; i++){
+        modX[i] = X[i];
+    }
+
+    for(int i = mod_size; i < stackedsize; i++){
         sunX[i] = X[i];
     }
 
 
-    return {modX, sunX};
-}
-
-void TSunDecorator::getRight(const TVector &X, long double t, TVector &Y){
-    size_t mod_size = getOrder() - sun_m_->getOrder();
-
-    std::vector<TVector> tupleX = splitX(X);
-
     TVector modY(mod_size),
             sunY(mod_size);
 
-    TModelDecorator::getRight(tupleX[0], t, modY);
-    sun_m_->getRight(tupleX[1], t, sunY);
+    TModelDecorator::getRight(modX, t, modY);
+    sun_m_->getRight(sunX, t, sunY);
 
     Y = modY.stack(sunY) + gSun(X);
 }

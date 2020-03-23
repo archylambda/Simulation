@@ -20,6 +20,17 @@ TEarthSatellite::TEarthSatellite()
     }
 }
 
+TEarthSatellite::TEarthSatellite(const TVector &keplerParams){
+    X0.resize(6);
+    X0 = SpecMath::KeplerToCartesian(keplerParams);
+    //запись в файл
+    outfile_.exceptions ( std::ifstream::failbit | std::ifstream::badbit );
+    try{
+        outfile_.open(filename, ios::out);
+    } catch (fstream::failure e){
+        cerr << "Exception opening file\n";
+    }
+}
 void TEarthSatellite::getRight(const TVector &X, long double t, TVector &Y){
     long double len = X.length();
 

@@ -11,7 +11,6 @@ private:
     fstream outfile_;
 public:
     TSinus();
-
     virtual void getRight(const TVector &X, long double t, TVector &Y) override;
 
     virtual void addResult(const TVector &X, long double t) override;

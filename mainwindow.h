@@ -16,7 +16,11 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_modelCB_currentIndexChanged(const QString &arg1);
+
+    void on_integratCB_currentIndexChanged(const QString &arg1);
+
+    void on_startSim_clicked();
 
 private:
     Ui::MainWindow *ui;

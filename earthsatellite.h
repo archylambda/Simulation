@@ -11,7 +11,7 @@ private:
     fstream outfile_;
 public:
     TEarthSatellite();
-
+    TEarthSatellite(const TVector &keplerParams);
     virtual void getRight(const TVector &X, long double t, TVector &Y);
     virtual void addResult(const TVector &X, long double t);
 

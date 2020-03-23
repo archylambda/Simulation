@@ -15,10 +15,10 @@ class TVector : public BaseVector
 {
 public:
     TVector() : BaseVector(){}
-    TVector(size_t n) : BaseVector(n){}
+    TVector(int n) : BaseVector(n){}
     //конструктор копий
     TVector(const TVector& rvalue): BaseVector(rvalue){}
-    inline size_t high() const { return size() - 1;}
+    inline int high() const { return size() - 1;}
     //унарный минус
     TVector operator -() const;
     //вычитание векторов
@@ -51,29 +51,29 @@ public:
 };
 class TMatrix:protected BaseMatrix{
 private:
-    inline TVector& operator() (size_t i) { return (TVector&)(*this)[i]; }
+    inline TVector& operator() (int i) { return (TVector&)(*this)[i]; }
 public:
     TMatrix():BaseMatrix(){}
     //Конструктор с заданным кол-вом элементов
-    TMatrix(size_t n, size_t m) : BaseMatrix() { this->resize(n, m); }
+    TMatrix(int n, int m) : BaseMatrix() { this->resize(n, m); }
     //конструктор копий
     TMatrix(const TMatrix& arg) : BaseMatrix(arg) {}
     //функция получения кол-ва строк
-    inline size_t rowCount() const {return this->size(); }
+    inline int rowCount() const {return this->size(); }
     //Функция получения кол-ва столбцов
-    inline size_t colCount() const {return (this->size() > 0) ? (*this)[0].size() : 0; }
+    inline int colCount() const {return (this->size() > 0) ? (*this)[0].size() : 0; }
     // Функция получения индекса последней строки
-    inline size_t rowHigh() const { return rowCount() - 1; }
+    inline int rowHigh() const { return rowCount() - 1; }
     // Функция получения индекса последнего столбца
-    inline size_t colHigh() const { return colCount() - 1; }
+    inline int colHigh() const { return colCount() - 1; }
     // оператор доступа к элементам матрицы
-    inline long double& operator()(size_t i,size_t j){ return (*this)[i][j]; }
+    inline long double& operator()(int i,int j){ return (*this)[i][j]; }
     // оператор константного доступа к элементам матрицы
-    inline const long double& operator()(size_t i,size_t j) const { return (*this)[i][j]; }
+    inline const long double& operator()(int i,int j) const { return (*this)[i][j]; }
     //константный оператор доступа к строке матрицы как к вектору
-    inline const TVector& operator() (size_t i) const { return (TVector&)(*this)[i]; }
+    inline const TVector& operator() (int i) const { return (TVector&)(*this)[i]; }
     //изменение размера
-    void resize(size_t n, size_t m);
+    void resize(int n, int m);
     //унарный минус
     TMatrix operator - () const;
     //оператор вычитания матриц
@@ -95,9 +95,9 @@ public:
     // Функция транспонирования
     TMatrix t() const;
     // Функция формирования единичной матрицы
-    static TMatrix E(size_t n);
+    static TMatrix E(int n);
     // Функция перестановки строк
-    TMatrix& swapRows(size_t i, size_t j);
+    TMatrix& swapRows(int i, int j);
     inline TMatrix GetNegative() const {return (*this) * (-1);}
 
 };
@@ -107,7 +107,7 @@ protected:
 public:
     TMatrix getLowerMatrix() const;
 
-    TSymmetricMatrix(size_t n) : TMatrix() {this->resize(n,n);}
+    TSymmetricMatrix(int n) : TMatrix() {this->resize(n,n);}
 
     inline TSymmetricMatrix t() const {}
 

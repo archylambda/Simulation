@@ -19,7 +19,7 @@ namespace StdLinearAlgebra {
 //унарный минус
 TVector TVector::operator -() const{
      TVector temp(*this);
-     for (size_t i = 0; i < this->size(); i++){
+     for (int i = 0; i < this->size(); i++){
          if(temp[i]!=0)
             temp[i] = -temp[i];
      }
@@ -34,7 +34,7 @@ TVector TVector::operator -(const TVector& arg) const{
 
     } else {
         TVector res(this->size());
-        for (size_t i = 0; i < this->size(); i++){
+        for (int i = 0; i < this->size(); i++){
             res[i] = (*this)[i] - arg[i];
         }
         return res;
@@ -49,7 +49,7 @@ TVector TVector::operator +(const TVector& arg) const{
 
     } else {
         TVector res(this->size());
-        for (size_t i = 0; i < this->size(); i++){
+        for (int i = 0; i < this->size(); i++){
             res[i] = (*this)[i] + arg[i];
         }
         return res;
@@ -74,7 +74,7 @@ long double TVector::operator *(const TVector& arg) const{
 
     } else {
         long double res = 0;
-        for (size_t i = 0; i < this->size(); i++){
+        for (int i = 0; i < this->size(); i++){
             res += (*this)[i] * arg[i];
         }
         return res;
@@ -89,8 +89,8 @@ TVector TVector::operator *(const TMatrix &arg) const{
 
     } else {
         TVector res(this->size());
-        for (size_t i = 0; i < this->size(); i++){
-            for(size_t j = 0; j<this->size(); j++){
+        for (int i = 0; i < this->size(); i++){
+            for(int j = 0; j<this->size(); j++){
                 res[i] += (*this)[j]*arg(j,i);
             }
         }
@@ -106,7 +106,7 @@ TVector TVector::operator ^(const TVector& arg) const{
 
     } else {
         TVector res(3);
-        for (size_t i = 0; i < this->size(); i++){
+        for (int i = 0; i < this->size(); i++){
             int i1 = (i + 1) % 3;
             int i2 = (i + 2) % 3;
             res[i] = (*this)[i1] * arg[i2] - (*this)[i2] * arg[i1];
@@ -118,7 +118,7 @@ TVector TVector::operator ^(const TVector& arg) const{
 // умножения числа на вектор
 TVector operator* (long double lvalue, const TVector& rvalue){
     TVector res(rvalue.size());
-    for (size_t i =0; i < rvalue.size(); i++){
+    for (int i =0; i < rvalue.size(); i++){
         res[i] = lvalue * rvalue[i];
     }
     return res;
@@ -135,11 +135,11 @@ long double TVector::length() const {
 }
 
 TVector TVector::GetNorm() const{
-    size_t size = this->size();
+    int size = this->size();
     long double len = this->length();
 
     TVector res(*this);
-    for (size_t i = 0; i < size; i++){
+    for (int i = 0; i < size; i++){
         res[i] /= len;
     }
 
@@ -181,23 +181,23 @@ TVector TVector::rotateByQuaternion(const TQuaternion& L) const{
 }
 
 TVector TVector::stack(const TVector &arg) const{
-    size_t sz = size(),
+    int sz = size(),
             arg_sz = arg.size();
 
     TVector res(arg_sz + sz);
-    for(size_t i = 0; i < sz; i++){
+    for(int i = 0; i < sz; i++){
         res[i] = (*this)[i];
     }
-    for(size_t i = sz; i < sz + arg_sz; i++){
+    for(int i = sz; i < sz + arg_sz; i++){
         res[i] = arg[i - sz];
     }
     
     return res;
 }
 // ---------------TMatrix----------------
-void TMatrix::resize(size_t n, size_t m){
+void TMatrix::resize(int n, int m){
     BaseMatrix::resize(n);
-    for (size_t i = 0; i < ((*this).rowCount()); i++){
+    for (int i = 0; i < ((*this).rowCount()); i++){
         (*this)(i).resize(m);
     }
 
@@ -207,8 +207,8 @@ void TMatrix::resize(size_t n, size_t m){
 
 TMatrix TMatrix::operator - () const{
     TMatrix mat(*this);
-    for(size_t i = 0; i < rowCount(); i++)
-        for(size_t j = 0; j < colCount();j++)
+    for(int i = 0; i < rowCount(); i++)
+        for(int j = 0; j < colCount();j++)
             mat(i,j) = -mat(i,j);
     return mat;
 }
@@ -222,8 +222,8 @@ TMatrix TMatrix::operator - (const TMatrix& arg) const{
 
     } else {
         TMatrix res(this->rowCount(),this->colCount());
-        for (size_t i = 0; i < this->rowCount(); i++){
-            for(size_t j = 0; j< this->colCount(); j++){
+        for (int i = 0; i < this->rowCount(); i++){
+            for(int j = 0; j< this->colCount(); j++){
                 res(i,j) = (*this)(i,j) - arg(i,j);
             }
         }
@@ -241,8 +241,8 @@ TMatrix TMatrix::operator + (const TMatrix& arg) const{
 
     } else {
         TMatrix res(this->rowCount(),this->colCount());
-        for (size_t i = 0; i < this->rowCount(); i++){
-            for(size_t j = 0; j< this->colCount(); j++){
+        for (int i = 0; i < this->rowCount(); i++){
+            for(int j = 0; j< this->colCount(); j++){
                 res(i,j) = (*this)(i,j) + arg(i,j);
             }
         }
@@ -271,9 +271,9 @@ TMatrix TMatrix::operator * (const TMatrix& arg) const{
 
     } else {
         TMatrix res(this->rowCount(),arg.colCount());
-        for (size_t i = 0; i < this->rowCount(); i++){
-            for (size_t j = 0; j < arg.colCount(); j++){
-                for(size_t k = 0; k < this->colCount(); k++)
+        for (int i = 0; i < this->rowCount(); i++){
+            for (int j = 0; j < arg.colCount(); j++){
+                for(int k = 0; k < this->colCount(); k++)
                     res(i,j) += (*this)(i,k) * arg(k,j);
             }
         }
@@ -291,8 +291,8 @@ TVector TMatrix::operator * (const TVector& arg) const{
     } else {
 
         TVector res(this->rowCount());
-        for (size_t i = 0; i < this->rowCount(); i++){
-            for(size_t j = 0; j < this->colCount(); j++){
+        for (int i = 0; i < this->rowCount(); i++){
+            for(int j = 0; j < this->colCount(); j++){
                 res[i] += (*this)(i,j)*arg[j];
             }
         }
@@ -315,12 +315,12 @@ TMatrix operator * (long double lvalue, const TMatrix& rvalue){
 // Оператор обращения матриц (метод Гаусса)
 TMatrix TMatrix::operator ! () const {
     TMatrix Mat(*this);
-    size_t size = Mat.rowCount();
+    int size = Mat.rowCount();
     TMatrix res = TMatrix::E(size);
-    for (size_t i = 0; i < size; i++){
+    for (int i = 0; i < size; i++){
         //если ведущий элемент равен 0
         if (Mat(i,i) <= 1.08420217248550443401e-19){
-            for (size_t l = i + 1; l < size; l++){
+            for (int l = i + 1; l < size; l++){
                 if (Mat(l,i) != 0){
                     Mat.swapRows(i,l);
                     break;
@@ -334,15 +334,15 @@ TMatrix TMatrix::operator ! () const {
         }
         //-"-
         long double ForwElem = Mat(i,i);
-        for(size_t j = 0;j < size; j++){
+        for(int j = 0;j < size; j++){
             Mat(i,j) /= ForwElem;
             res(i,j) /= ForwElem;
 
         }
-        for(size_t k = 0;k < size;k++){
+        for(int k = 0;k < size;k++){
             if (k==i){continue;}
             long double matki = Mat(k,i);
-            for(size_t j = 0; j < size; j++){
+            for(int j = 0; j < size; j++){
                 res(k,j) -= matki*res(i,j);
                 Mat(k,j) -= matki*Mat(i,j);
 
@@ -363,10 +363,10 @@ long double TMatrix::det() const{
     int swapcount = 0;
     long double res = 1;
     TMatrix Mat(*this);
-    size_t size = Mat.rowCount();
-    for (size_t i = 0; i < size - 1; i++){
+    int size = Mat.rowCount();
+    for (int i = 0; i < size - 1; i++){
         if (fabsl(Mat(i,i)) <= 1.08420217248550443401e-19){
-            for (size_t l = i + 1; l < size; l++){
+            for (int l = i + 1; l < size; l++){
                 if (Mat(l,i) != 0){
                     Mat.swapRows(i,l);
                     swapcount++;
@@ -377,16 +377,16 @@ long double TMatrix::det() const{
             }
 
         }
-        for(size_t k = i + 1;k < size; k++){
+        for(int k = i + 1;k < size; k++){
             long double mult = Mat(k,i)/Mat(i,i);
-            for (size_t j = i; j < size; j++){
+            for (int j = i; j < size; j++){
                 Mat(k,j) -= mult*Mat(i,j);
             }
         }
 
     }
 
-    for (size_t i = 0; i < size; i++){
+    for (int i = 0; i < size; i++){
         res *= Mat(i,i);
     }
 
@@ -395,11 +395,11 @@ long double TMatrix::det() const{
 }
 
 // Функция формирования единичной матрицы
-TMatrix TMatrix::E(size_t n){
+TMatrix TMatrix::E(int n){
     TMatrix E(n,n);
-    for(size_t i = 0; i < n;i++){
+    for(int i = 0; i < n;i++){
         E(i,i) = 1;
-        for(size_t j=i+1; j < n;j++){
+        for(int j=i+1; j < n;j++){
             E(i,j) = E(j,i) = 0;
         }
     }
@@ -408,12 +408,12 @@ TMatrix TMatrix::E(size_t n){
 }
 
 TMatrix TMatrix::t() const{
-    size_t rowCount = this->colCount(),
+    int rowCount = this->colCount(),
            colCount = this->rowCount();
     TMatrix res(rowCount, colCount);
 
-    for (size_t i = 0; i < rowCount; i++){
-        for(size_t j = 0; j < colCount; j++){
+    for (int i = 0; i < rowCount; i++){
+        for(int j = 0; j < colCount; j++){
             res(i,j) = (*this)(j,i);
         }
     }
@@ -421,7 +421,7 @@ TMatrix TMatrix::t() const{
 
 }
 // Функция перестановки строк
-TMatrix& TMatrix::swapRows(size_t i, size_t j){
+TMatrix& TMatrix::swapRows(int i, int j){
     TVector i_row((*this)(i));
     TVector j_row((*this)(j));
 
@@ -432,13 +432,13 @@ TMatrix& TMatrix::swapRows(size_t i, size_t j){
 }
 
 TMatrix TSymmetricMatrix::getLowerMatrix() const{
-    size_t size = (*this).rowCount();
+    int size = (*this).rowCount();
     TSymmetricMatrix res(size);
-    for(size_t i = 0; i < size; i++){
-        for(size_t j = 0; j <= i; j++){
+    for(int i = 0; i < size; i++){
+        for(int j = 0; j <= i; j++){
         long double SumOfNotDiagonally = 0;
             if(i == j){
-                for(size_t k = 0; k < i;k++){
+                for(int k = 0; k < i;k++){
                     SumOfNotDiagonally += res(i,k)*res(i,k);
                 }
                 res(i,i) = sqrt((*this)(i,i) - SumOfNotDiagonally);
@@ -449,7 +449,7 @@ TMatrix TSymmetricMatrix::getLowerMatrix() const{
                 }
 
             } else {
-                for(size_t k =0; k < j;k++){
+                for(int k =0; k < j;k++){
                     SumOfNotDiagonally+= res(i,k)*res(j,k);
                 }
                 res(i,j) = ((*this)(i,j) - SumOfNotDiagonally)/res(j,j);
@@ -461,7 +461,7 @@ TMatrix TSymmetricMatrix::getLowerMatrix() const{
 
 TSymmetricMatrix TSymmetricMatrix::operator ! () const {
     TSymmetricMatrix Mat(*this);
-    size_t size = Mat.rowCount();
+    int size = Mat.rowCount();
     TSymmetricMatrix res(size);
     TSymmetricMatrix LowerMatrix(size);
 
@@ -472,12 +472,12 @@ TSymmetricMatrix TSymmetricMatrix::operator ! () const {
         for(int j = i; j >= 0; j--){
             long double SumOfNotDiagonally = 0;
             if (j == i){
-                for(size_t k = i+1; k < size; k++){
+                for(int k = i+1; k < size; k++){
                     SumOfNotDiagonally += LowerMatrix(k,i)*res(k,i);
                 }
                 res(i,i)= (1/LowerMatrix(i,i) - SumOfNotDiagonally)/LowerMatrix(i,i);
             } else {
-                for(size_t k = j + 1; k < size; k++){
+                for(int k = j + 1; k < size; k++){
                     SumOfNotDiagonally += LowerMatrix(k,j)*res(k,i);
                 }
                 res(i,j) = -SumOfNotDiagonally/LowerMatrix(j,j);
