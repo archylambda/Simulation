@@ -10,12 +10,19 @@ protected:
     TModel* moon_m_;
     TVector gMoon(const TVector &X);
 
-    std::vector<TVector> splitX(const TVector &X) override;
-
 public:
     TMoonDecorator(TModel* model);
     void getRight(const TVector &X, long double t, TVector &Y) override;
     
+
+    inline void setSamplingIncrement(const long double &_SamplingIncrement){
+        TModelDecorator::setSamplingIncrement(_SamplingIncrement);
+        moon_m_->setSamplingIncrement(_SamplingIncrement);
+    }
+    inline void setEndTime(const long double &_t1){
+        TModelDecorator::setEndTime(_t1);
+        moon_m_->setEndTime(_t1);
+    }
     ~TMoonDecorator();
 };
 

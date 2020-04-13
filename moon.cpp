@@ -2,27 +2,25 @@
 #include "const.h"
 #include <iostream>
 
+TVector TMoon::getStartCoords(){
+    TVector res(6);
+
+    res[0] = -285997.889557;
+    res[1] = -250830.089349;
+    res[2] = -71384.417342;
+    res[3] = 0.643026;
+    res[4] = -0.710861;
+    res[5] = -0.330661;
+
+    return res;
+}
+
 TMoon::TMoon()
 {
     //на дату 01.01.2019 0:00
 
-    X0.resize(6);
-    X0[0] = -285997.889557;
-    X0[1] = -250830.089349;
-    X0[2] = -71384.417342;
-    X0[3] = 0.643026;
-    X0[4] = -0.710861;
-    X0[5] = -0.330661;
+    X0 = getStartCoords();
 
-    SamplingIncrement = 10;
-    t1 = 1000000;
-
-    outfile_.exceptions ( std::ifstream::failbit | std::ifstream::badbit );
-    try{
-        outfile_.open(filename, ios::out);
-    } catch (fstream::failure e){
-        cerr << "Exception opening file\n";
-    }
 }
 
 void TMoon::getRight(const TVector &X, long double t, TVector &Y){
@@ -36,13 +34,3 @@ void TMoon::getRight(const TVector &X, long double t, TVector &Y){
     Y[5] = -MU_EARTH*X[2]/(len*len*len);
 }
 
-void TMoon::addResult(const TVector &X, long double t){
-    for(int i = 0; i < 6; i++){
-        outfile_ << X[i] << ' ';
-    }
-    outfile_ << endl;
-}
-
-TMoon::~TMoon(){
-    outfile_.close();
-}

@@ -24,5 +24,13 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    QVector<QVector<double>> readResultsByColumns(std::string filename_, int colCount = 4);
+    QVector<QVector<double>> getResiduals(std::string filename_,
+                                        std::string std_sat_filename_);
+
+    void plot(const QVector<QVector<double>> &data);
+    void plotResiduals(const QVector<QVector<double>> &residuals);
+    void plotSinus(const QVector<QVector<double>> &data);
 };
 #endif // MAINWINDOW_H

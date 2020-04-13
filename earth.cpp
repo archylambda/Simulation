@@ -4,29 +4,30 @@
 #include "specmath.h"
 #include <iostream>
 
-TEarth::TEarth()
-{
-
+TVector TEarth::getStartCoords(){
     //на дату 01.01.2019 0:00
 
-    X0.resize(6);
-    X0[0] = (-1)*2.566123740124270e7;
-    X0[1] = 1.339350231544666e8;
-    X0[2] = 5.805149372446711e7;
-    X0[3] = (-1)*2.983549561177192*10;
-    X0[4] = (-1)*4.846747552523134;
-    X0[5] = (-1)*2.100585886567924;
+    TVector res(6);
+    res[0] = (-1)*2.566123740124270e7;
+    res[1] = 1.339350231544666e8;
+    res[2] = 5.805149372446711e7;
+    res[3] = (-1)*2.983549561177192*10;
+    res[4] = (-1)*4.846747552523134;
+    res[5] = (-1)*2.100585886567924;
 
-    SamplingIncrement = 10;
-    t1 = 10000000;
-    //запись в файл
+    return res;
+}
 
-    outfile_.exceptions ( std::ifstream::failbit | std::ifstream::badbit );
-    try{
-        outfile_.open(filename, ios::out);
-    } catch (fstream::failure e){
-        cerr << "Exception opening file\n";
-    }
+TEarth::TEarth(){
+    X0 = getStartCoords();
+}
+
+TEarth::TEarth(const string &filename, const long double &sampIncr, const long double &endTime) :
+    TCustomModel(filename, sampIncr, endTime)
+{
+
+    X0 = getStartCoords();
+
 }
 
 void TEarth::getRight(const TVector &X, long double t, TVector &Y){
@@ -42,20 +43,4 @@ void TEarth::getRight(const TVector &X, long double t, TVector &Y){
 
 }
 
-void TEarth::addResult(const TVector &X, long double t){
-
-    for(int i = 0; i < 3; i++){
-        outfile_ << X[i] << ' ';
-    }
-    outfile_ << endl;
-
-}
-
-
-
-
-
-TEarth::~TEarth(){
-    outfile_.close();
-}
 

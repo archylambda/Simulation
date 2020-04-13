@@ -1,21 +1,19 @@
 #ifndef SINUS_H
 #define SINUS_H
-#include "model.h"
+#include "custommodel.h"
 #include <fstream>
 
 using namespace std;
 
-class TSinus : public TModel
+class TSinus : public TCustomModel
 {
-private:
-    fstream outfile_;
+
 public:
-    TSinus();
+    TSinus(const string &filename, const long double &sampIncr,
+           const long double &endTime);
     virtual void getRight(const TVector &X, long double t, TVector &Y) override;
 
     virtual void addResult(const TVector &X, long double t) override;
-
-    ~TSinus();
 };
 
 #endif // SINUS_H

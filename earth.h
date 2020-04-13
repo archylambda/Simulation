@@ -1,12 +1,12 @@
 #ifndef EARTH_H
 #define EARTH_H
-#include "model.h"
+#include "custommodel.h"
 #include <fstream>
 #include <string>
 #include <map>
 using namespace std;
 
-class TEarth : public TModel
+class TEarth : public TCustomModel
 {
 private:
     //угловая скорость вращения земли
@@ -14,18 +14,15 @@ private:
     //радис земли
     const long double R = 6371.3; // km
 
-    //вывод в файл
-    fstream outfile_;
-
+    TVector getStartCoords();
 public:
-
     TEarth();
+    TEarth(const string &filename, const long double &sampIncr, const long double &endTime);
 
-    virtual void getRight( const TVector& X, long  double t, TVector& Y );
+    virtual void getRight( const TVector& X, long  double t, TVector& Y ) override;
 
-    virtual void addResult(const TVector& X, long double t );
 
-    ~TEarth();
+
 };
 
 #endif // EARTH_H

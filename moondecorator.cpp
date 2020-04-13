@@ -1,13 +1,14 @@
 #include "moondecorator.h"
 #include <math.h>
-#include <const.h>
-#include <moon.h>
+#include "const.h"
+#include "moon.h"
 
 TMoonDecorator::TMoonDecorator(TModel* model):
     TModelDecorator(model)
 {
     moon_m_ = new TMoon();
-
+    moon_m_->setEndTime(model->getT1());
+    moon_m_->setSamplingIncrement(model->getSamplingIncrement());
     X0 = getInitialConditions().stack(moon_m_->getInitialConditions());
 
 
@@ -36,45 +37,16 @@ TVector TMoonDecorator::gMoon(const TVector &X){
 
 }
 
-std::vector<TVector> TMoonDecorator::splitX(const TVector &X){
-    int stackedsize = getOrder(),
-            mod_size = getOrder() - moon_m_->getOrder();
-
-    TVector modX(mod_size),
-            moonX(moon_m_->getOrder());
-    for(int i = 0; i < mod_size; i++){
-        modX[i] = X[i];
-    }
-
-    for(int i = mod_size; i < stackedsize; i++){
-        moonX[i] = X[i];
-    }
-
-    std::vector<TVector> res(2);
-    res[0] = modX; res[1] = moonX;
-    return res;
-}
 
 void TMoonDecorator::getRight(const TVector &X, long double t, TVector &Y){
-    int mod_size = getOrder() - moon_m_->getOrder();
 
-    int stackedsize = getOrder();
+    vector<TVector> split_vecs = splitX(X);
 
-    TVector modX(mod_size),
-            moonX(moon_m_->getOrder());
-    for(int i = 0; i < mod_size; i++){
-        modX[i] = X[i];
-    }
+    TVector modY(getOrder() - moon_m_->getOrder()),
+            moonY(moon_m_->getOrder());
 
-    for(int i = mod_size; i < stackedsize; i++){
-        moonX[i] = X[i];
-    }
-
-    TVector modY(mod_size),
-            moonY(mod_size);
-
-    TModelDecorator::getRight(modX, t, modY);
-    moon_m_->getRight(moonX, t, moonY);
+    TModelDecorator::getRight(split_vecs[0], t, modY);
+    moon_m_->getRight(split_vecs[1], t, moonY);
 
     Y = modY.stack(moonY) + gMoon(X);
 

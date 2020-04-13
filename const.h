@@ -7,4 +7,5 @@ const long double J2000 = 2451544.5; // юлианская дата на 0:00 01
 const long double MU_EARTH = 398600.44158;
 const long double MU_MOON = 4902.80003;
 const std::string filename = "result.txt";
+const std::string fstandSat = "stand_sat_result.txt";
 #endif // CONST_H

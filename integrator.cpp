@@ -25,6 +25,9 @@ long double TEilerIntegrator::Run(TModel *Model){
                 h = Model->getSamplingIncrement();
     //заполняем вектор состояния системы начальными условиями модели
     TVector X = Model->getInitialConditions();
+
+    Model->prepareResult();
+
     //главный цикл
     while (t < t1){
         //получаем правые части
@@ -52,6 +55,9 @@ long double TRungeKuttaIntegrator::Run(TModel *Model){
                 h = Model->getSamplingIncrement();
     //заполняем вектор состояния системы начальными условиями модели
     TVector X = Model->getInitialConditions();
+
+    //подготовка хранища результатов в модели для повышения эффективности
+    Model->prepareResult();
     //инициализируем векторы коэффициентов
     for(int i = 0; i < 4; i++){
         K[i].resize(X.size());
@@ -134,6 +140,7 @@ long double TDormandPrinceIntegrator::Run(TModel* Model)
             Y( X.size() );
 
     // Подготовка хранилища результатов в модели для повышения эффективности выделения памяти
+
     Model->prepareResult();
 
     // Инициализируем размерности коэф-тов K[j]
