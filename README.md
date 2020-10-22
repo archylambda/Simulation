@@ -24,3 +24,12 @@
 
 
 ![sim2](https://user-images.githubusercontent.com/22938845/96845424-5d9ac100-1459-11eb-996e-66a797f86d64.PNG)
+
+### Структура проекта
+
+
+![decorator](https://user-images.githubusercontent.com/22938845/96847194-8cb23200-145b-11eb-99d1-8f76dddca047.png)
+ 
+ Отсутствует на uml диаграмме:
+  * ***tvector*** - матричная библиотека (вектора, матрицы, кватернионы)
+  * ***specmath*** - вспомогательные функции
