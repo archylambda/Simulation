@@ -109,7 +109,7 @@ public:
 
     TSymmetricMatrix(int n) : TMatrix() {this->resize(n,n);}
 
-    inline TSymmetricMatrix t() const {}
+    inline TSymmetricMatrix t() const {return (*this);}
 
     TSymmetricMatrix operator !() const;
 
